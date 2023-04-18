@@ -25,6 +25,7 @@ class _MyAppState extends State<MyApp> {
 
   //melakukan fetch dari api yang saya pakai
   Future<void> _fetchMetalPrices() async {
+    //url api , mohon konfirmasinya apabila hanya loading , soalnya api gratisan sehingga requestnya di limit :)
     final url =
         'https://metals-api.com/api/latest?access_key=626jkclzf4yp799925b5o4lzei7i3g1parmunvhrbmlgwzcho05yplpg9913&base=IDR&symbols=XAU%2CXAG%2CXPD%2CXPT%2CXRH%2CXCU%2CXPD%2CXAU-BANG%2CXAU-COIM%2CXAG-COIM%2CXAU-AHME%2CXAG-AHME%2CXAG-BANG%2CXAU-CHEN%2CXAG-CHEN';
     final response = await http.get(Uri.parse(url));
@@ -158,7 +159,7 @@ class _MyAppState extends State<MyApp> {
           title: Text('Metal Prices In IDR ( click on list )'),
           backgroundColor: Colors.blueGrey,
         ),
-        //Tampilan Loading menggunakan DoubleBounce
+        //Tampilan Loading menggunakan tema DoubleBounce
         body: isLoading
             ? Center(
           child: SpinKitDoubleBounce(
@@ -171,8 +172,11 @@ class _MyAppState extends State<MyApp> {
           itemBuilder: (context, index) {
             final key = metalPrices.keys.toList()[index];
             final value = metalPrices.values.toList()[index];
+            //deefinisikan bahwa value friendlyName sama dengan _replaceMetalName dengan parameter key
             final friendlyName = _replaceMetalName(key);
+            //deefinisikan bahwa value descOfMetal sama dengan _descMetalName dengan parameter key
             final descOfMetal = _descMetalName(key);
+            //deefinisikan bahwa value urlOfImageMetal sama dengan _urlMetalName dengan parameter key
             final urlOfImageMetal = _urlMetalName(key);
 
             return ListTile(
